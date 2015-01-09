@@ -123,7 +123,9 @@ class Node(val config: Config) extends StrictLogging {
   // TODO: Super stupid dangerous method, how to fix this?
   // Maybe we can use STM?
   private def changeState(newState: NodeState) = {
-    this.currentState = newState
+    synchronized {
+      this.currentState = newState
+    }
   }
 
   private def handlerServerEvent(req: ClientRequest): Unit = {
